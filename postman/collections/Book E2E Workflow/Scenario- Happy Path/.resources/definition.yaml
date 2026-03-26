@@ -1,7 +1,7 @@
 $kind: collection
 name: "Scenario: Happy Path"
 auth:
-  - id: fb757be3-b901-454d-aa9d-2a988e748c6b
+  - id: 50e889c6-337a-4352-8809-63078f975d49
     type: apikey
     name: apikey auth
     credentials:
