@@ -1,0 +1,576 @@
+openapi: 3.0.0
+info:
+  title: Postman Library API v2 docs
+  version: 1.0.0
+  description: >-
+    Manage books in the Postman library using this API. This API is designed to
+    teach the basics of using APIs and Postman!
+
+
+    Note that all non-permanent collection books are automatically deleted on a
+    three-day rolling basis
+
+
+    ## Permanent collection books
+
+
+    Some books are part of the **permanent collection** and cannot be edited or
+    deleted. These books have the property `isPermanentCollection: true`
+
+
+    ## Authorizing requests
+
+
+    This API requires Authorization to make POST, PATCH, and DELETE requests.
+
+
+    You will need to set the API key in the collection variables to
+    `postmanrulz` in order to make those requests.
+
+
+    In the real world you would generate an API Key with an API's developer
+    portal service. This is just a training API so we have provided an API key
+    for you!
+
+
+    Learn more about authorizing API requests in Postman
+    [here](https://learning.postman.com/docs/sending-requests/authorization/).
+
+
+    ## This is a public API!
+
+
+    Any book you add or update will be publicly visible to all users of this
+    API. Please be respectful and follow these rules:
+
+
+    - Only modify books you have added yourself
+        
+    - Understand that books in this API may be deleted at any time
+        
+
+    ## What's different from the old [Postman Library
+    API](https://www.postman.com/postman/workspace/postman-classroom-program/collection/15567703-da68bf1c-1aae-4f14-a79b-95926a816366?ctx=documentation)?
+
+
+    The old Library API was used in the [Postman Classroom
+    Program](https://www.postman.com/postman/workspace/postman-classroom-program/overview)
+    modules. We made some improvements for v2:
+
+
+    - **API Key Auth for POST/PATCH/DELETE requests**. Practice authorization!
+        
+    - **POST/PATCH requests now return book info such as** **`id`**. This
+    enables possibilities with scripting based on the response.
+        
+    - **Dedicated public workspace and docs**. You can view this API's schema
+    from the "API" tab in the public workspace. Easily find and fork this API or
+    docs by searching "Postman Library API v2"
+        
+    - **Automatic cleanup**. Non-permanent collection books are automatically
+    deleted on a rolling three-day basis.
+        
+    - **Profanity filters**. Cleans up book titles and author names
+servers:
+  - url: https://library-api.postmanlabs.com
+  - url: ''
+paths:
+  /books/{id}:
+    get:
+      summary: Get a book by id
+      responses:
+        '200':
+          description: Found book
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  author:
+                    type: string
+                  genre:
+                    type: string
+                  yearPublished:
+                    type: integer
+                  checkedOut:
+                    type: boolean
+                  isPermanentCollection:
+                    type: boolean
+                  createdAt:
+                    type: string
+                    format: date-time
+              example:
+                id: 29cd820f-82f9-4b45-a7f4-0924111b5b89
+                title: Ficciones
+                author: Jorge Luis Borges
+                genre: fiction
+                yearPublished: 1944
+                checkedOut: false
+                isPermanentCollection: true
+                createdAt: '2022-03-04T22:10:24.526Z'
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Book with id '29cd820f-82f9-4b45-a7f4-0924111b5b80 not found
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: error
+                message: something
+      tags:
+        - books
+        - '{id}'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: (Required) the id of a book
+        schema:
+          type: string
+        example: 29f47d22-1062-479d-be58-2d8db3ecb8be
+    patch:
+      summary: Update a book by id
+      responses:
+        '200':
+          description: Update successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  author:
+                    type: string
+                  genre:
+                    type: string
+                  yearPublished:
+                    type: integer
+                  checkedOut:
+                    type: boolean
+                  isPermanentCollection:
+                    type: boolean
+                  createdAt:
+                    type: string
+                    format: date-time
+              example:
+                id: 29cd820f-82f9-4b45-a7f4-0924111b5b89
+                title: Ficciones
+                author: Jorge Luis Borges
+                genre: fiction
+                yearPublished: 1944
+                checkedOut: true
+                isPermanentCollection: true
+                createdAt: '2022-03-04T22:10:24.526Z'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        instancePath:
+                          type: string
+                        schemaPath:
+                          type: string
+                        keyword:
+                          type: string
+                        params:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                        message:
+                          type: string
+              example:
+                message: body/checkedOut must be boolean
+                errors:
+                  - instancePath: /checkedOut
+                    schemaPath: '#/properties/checkedOut/type'
+                    keyword: type
+                    params:
+                      type: boolean
+                    message: must be boolean
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: >-
+                  Invalid or missing credentials. Make sure you add 'api-key' to
+                  the request headers with a valid value
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: >-
+                  You cannot modify books in the permanent collection! Book with
+                  id '29cd820f-82f9-4b45-a7f4-0924111b5b89' is in the permanent
+                  collection.
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Book with id '29cd820f-82f9-4b45-a7f4-0924111b5b80' not found
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: error
+                message: something
+      tags:
+        - books
+        - '{id}'
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                checkedOut:
+                  type: boolean
+            example:
+              checkedOut: true
+    delete:
+      summary: Delete a book by id
+      responses:
+        '204':
+          description: Delete successful
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: >-
+                  Invalid or missing credentials. Make sure you add 'api-key' to
+                  the request headers with a valid value
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: >-
+                  You cannot modify books in the permanent collection! Book with
+                  id '29cd820f-82f9-4b45-a7f4-0924111b5b89' is in the permanent
+                  collection.
+        '404':
+          description: Book not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: Book with id '29cd820f-82f9-4b45-a7f4-0924111b5b8e' not found
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: error
+                message: something
+      tags:
+        - books
+        - '{id}'
+      security:
+        - ApiKeyAuth: []
+  /:
+    get:
+      summary: New Request
+      responses: {}
+      tags:
+        - books
+        - '{id}'
+  /books:
+    get:
+      summary: Get books
+      parameters:
+        - name: genre
+          in: query
+          description: a genre to filter for
+          schema:
+            type: string
+          example: fiction
+        - name: checkedOut
+          in: query
+          description: a value true or false
+          schema:
+            type: boolean
+          example: 'false'
+        - name: search
+          in: query
+          description: a search term to match against author or title
+          schema:
+            type: string
+          example: borges
+      responses:
+        '200':
+          description: A list of all books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    author:
+                      type: string
+                    genre:
+                      type: string
+                    yearPublished:
+                      type: integer
+                    checkedOut:
+                      type: boolean
+                    isPermanentCollection:
+                      type: boolean
+                    createdAt:
+                      type: string
+                      format: date-time
+              example:
+                - id: 50b1a8e9-78f0-4a80-b350-8fdf8fb1b8b8
+                  title: A Thousand Splendid Suns
+                  author: Khaled Hosseini
+                  genre: fiction
+                  yearPublished: 2007
+                  checkedOut: false
+                  isPermanentCollection: true
+                  createdAt: '2022-03-04T22:10:24.526Z'
+                - id: 29cd820f-82f9-4b45-a7f4-0924111b5b89
+                  title: Ficciones
+                  author: Jorge Luis Borges
+                  genre: fiction
+                  yearPublished: 1944
+                  checkedOut: false
+                  isPermanentCollection: true
+                  createdAt: '2022-03-04T22:10:24.526Z'
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: error
+                message: something
+      tags:
+        - books
+    post:
+      summary: Add a book
+      responses:
+        '201':
+          description: Book created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  author:
+                    type: string
+                  genre:
+                    type: string
+                  yearPublished:
+                    type: integer
+                  checkedOut:
+                    type: boolean
+                  isPermanentCollection:
+                    type: boolean
+                  createdAt:
+                    type: string
+                    format: date-time
+              example:
+                id: 6d63c5b9-74ed-40ff-9415-81589189f690
+                title: The Four Agreements
+                author: don Miguel Ruiz
+                genre: self-help
+                yearPublished: 1997
+                checkedOut: false
+                isPermanentCollection: false
+                createdAt: '2022-03-17T16:09:41.950Z'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        instancePath:
+                          type: string
+                        schemaPath:
+                          type: string
+                        keyword:
+                          type: string
+                        params:
+                          type: object
+                          properties:
+                            missingProperty:
+                              type: string
+                        message:
+                          type: string
+              example:
+                message: >-
+                  body must have required property 'genre', body/yearPublished
+                  must be integer
+                errors:
+                  - instancePath: ''
+                    schemaPath: '#/required'
+                    keyword: required
+                    params:
+                      missingProperty: genre
+                    message: must have required property 'genre'
+                  - instancePath: /yearPublished
+                    schemaPath: '#/properties/yearPublished/type'
+                    keyword: type
+                    params:
+                      type: integer
+                    message: must be integer
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: >-
+                  Invalid or missing credentials. Make sure you add 'api-key' to
+                  the request headers with a valid value
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+              example:
+                status: error
+                message: something
+      tags:
+        - books
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                author:
+                  type: string
+                genre:
+                  type: string
+                yearPublished:
+                  type: integer
+            example:
+              title: The Four Agreements
+              author: don Miguel Ruiz
+              genre: self-help
+              yearPublished: 1997
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
