@@ -1,0 +1,1304 @@
+{
+  "info": {
+    "_postman_id": "2e50249d-e7c7-4c96-a7d7-4d70401c7a11",
+    "name": "Book E2E Workflow",
+    "description": "# 🤝 Authorization Flow\n\n<img src=\"https://content.pstmn.io/874faa43-1838-4e73-b3e6-35e0d30911dc/MV9uaGVmWnRKdFAzX0xoTUtMdWVVek1nLmdpZg==\">\n\n# 🚀 API Flow\n\n<img src=\"https://content.pstmn.io/94d8b05a-57fe-4bd7-8b5c-2a1bc787e67b/aW1hZ2UucG5n\" width=\"1663\" height=\"1118\">\n\n# ⚠️ Common Gotchas\n\n- Use a valid XYZ\n    \n- Beware of ABC\n    \n\n# Required file:\n\n- [CSV file](https://docs.google.com/spreadsheets/d/1JKilNNN0Ts5tWJf6ae_HKUY9x7Bwx3CiLPJ0G4C9Ik8/edit?usp=sharing)\n    \n\nContact Support:  \nName: Ronak  \nEmail: [admin@admin.com](https://mailto:admin@admin.com)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51488572",
+    "_collection_link": "https://go.postman.co/collection/51488572-2e50249d-e7c7-4c96-a7d7-4d70401c7a11?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Scenario: Happy Path",
+      "item": [
+        {
+          "name": "Fetch a list of books",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "pm.test(\"Response status code is 200\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(200);",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Response is an array with at least one book object\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Each book object has the required fields\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "",
+                  "    pm.expect(responseData).to.be.an('array');",
+                  "",
+                  "    responseData.forEach(book => {",
+                  "        pm.expect(book).to.be.an('object');",
+                  "        pm.expect(book).to.have.all.keys('id', 'title', 'author', 'genre', 'yearPublished', 'checkedOut', 'isPermanentCollection', 'createdAt');",
+                  "    });",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"The title must be a non-empty string\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+                  "    responseData.forEach(book => {",
+                  "        pm.expect(book.title).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Title should not be empty\");",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('GET /books - Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "})",
+                  "",
+                  "pm.test('GET /books - Content-Type is JSON', function () {",
+                  "    pm.response.to.have.header('Content-Type');",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/i);",
+                  "})",
+                  "",
+                  "pm.test('GET /books - Response is an array of books', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "})",
+                  "",
+                  "pm.test('GET /books - Each book has expected fields & types', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "    jsonData.forEach(function (book) {",
+                  "        pm.expect(book).to.be.an('object');",
+                  "        pm.expect(book).to.have.property('id');",
+                  "        pm.expect(book.id).to.satisfy(function (v) {",
+                  "            return typeof v === 'string' || typeof v === 'number';",
+                  "        });",
+                  "        pm.expect(book).to.have.property('title');",
+                  "        pm.expect(book.title).to.be.a('string');",
+                  "        if (book.hasOwnProperty('author'))",
+                  "            pm.expect(book.author).to.be.a('string');",
+                  "        if (book.hasOwnProperty('genre'))",
+                  "            pm.expect(book.genre).to.be.a('string');",
+                  "        if (book.hasOwnProperty('yearPublished'))",
+                  "            pm.expect(book.yearPublished).to.satisfy(function (v) {",
+                  "                return typeof v === 'number' || typeof v === 'string';",
+                  "            });",
+                  "        pm.expect(book).to.have.property('checkedOut');",
+                  "        pm.expect(book.checkedOut).to.be.a('boolean');",
+                  "        if (book.hasOwnProperty('isPermanentCollection'))",
+                  "            pm.expect(book.isPermanentCollection).to.be.a('boolean');",
+                  "    });",
+                  "})",
+                  "",
+                  "pm.test('GET /books - Negative check: does not return an error object', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.not.have.property('error');",
+                  "    pm.expect(jsonData).to.not.have.property('errors');",
+                  "})"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-mock-response-code",
+                "value": "500",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/books",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            },
+            "description": "### Get Books\n\nThis endpoint retrieves a list of books from the collection. It returns various details about each book, including its title, author, genre, publication year, and status regarding checkout and permanence in the collection.\n\n#### Request\n\n- **Method**: GET\n    \n- **URL**: `{{url}}/books`\n    \n\n#### Response\n\n- **Status Code**: 200 OK\n    \n- **Content-Type**: application/json\n    \n- **Response Body**: An array of book objects, each containing the following fields:\n    \n    - `id`: Unique identifier for the book.\n        \n    - `title`: Title of the book.\n        \n    - `author`: Author of the book.\n        \n    - `genre`: Genre of the book.\n        \n    - `yearPublished`: The year the book was published.\n        \n    - `checkedOut`: Boolean indicating if the book is currently checked out.\n        \n    - `isPermanentCollection`: Boolean indicating if the book is part of the permanent collection.\n        \n    - `createdAt`: Timestamp of when the book entry was created.\n        \n\n#### Example Response\n\n``` json\n[\n  {\n    \"id\": \"\",\n    \"title\": \"\",\n    \"author\": \"\",\n    \"genre\": \"\",\n    \"yearPublished\": 0,\n    \"checkedOut\": true,\n    \"isPermanentCollection\": true,\n    \"createdAt\": \"\"\n  }\n]\n\n ```\n\n#### Notes\n\n- Ensure that the request is made to the correct endpoint to receive the desired book data.\n    \n- The response may contain multiple book entries, and each entry will have the fields specified above."
+          },
+          "response": [
+            {
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url}}/books",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": 500,\n        \"message\": \"Internal Server Error\"\n    }\n}"
+            },
+            {
+              "name": "Successful Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-mock-response-code",
+                    "value": "200",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/books",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"code\": \"200\",\n    \"message\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create a new book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// collection.set()var jsonData = pm.response.json(); ",
+                  "var jsonData = pm.response.json(); ",
+                  "pm.collectionVariables.set(\"bookId\", jsonData.id);",
+                  "pm.collectionVariables.set(\"bookTitle\", jsonData.title);",
+                  "",
+                  "",
+                  "pm.test(\"Response status code is 201\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(201);",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Validate the presence of required fields\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData).to.have.all.keys('id', 'title', 'author', 'genre', 'yearPublished', 'checkedOut', 'isPermanentCollection', 'createdAt');",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"YearPublished is a valid year\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    const currentYear = new Date().getFullYear();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData.yearPublished).to.be.a('number').that.is.greaterThan(0).and.is.at.most(currentYear);",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"CreatedAt is in a valid date format\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.have.property('createdAt');",
+                  "    pm.expect(new Date(responseData.createdAt).getTime()).to.not.be.NaN;",
+                  "});",
+                  "",
+                  "pm.test('POST /books - Status code is 201 (or 200)', function () {",
+                  "    pm.expect([",
+                  "        200,",
+                  "        201",
+                  "    ]).to.include(pm.response.code);",
+                  "})",
+                  "",
+                  "pm.test('POST /books - Content-Type is JSON', function () {",
+                  "    pm.response.to.have.header('Content-Type');",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/i);",
+                  "})",
+                  "",
+                  "pm.test('POST /books - Response body has created book fields', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('object');",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData.id).to.satisfy(function (v) {",
+                  "        return typeof v === 'string' || typeof v === 'number';",
+                  "    });",
+                  "    pm.expect(jsonData).to.have.property('title');",
+                  "    pm.expect(jsonData.title).to.be.a('string');",
+                  "    pm.expect(jsonData).to.have.property('checkedOut');",
+                  "    pm.expect(jsonData.checkedOut).to.be.a('boolean');",
+                  "})",
+                  "",
+                  "pm.test('POST /books - Persist bookId and bookTitle as collection variables', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set('bookId', String(jsonData.id));",
+                  "    pm.collectionVariables.set('bookTitle', jsonData.title);",
+                  "    pm.expect(pm.collectionVariables.get('bookId')).to.be.a('string').and.not.be.empty;",
+                  "    pm.expect(pm.collectionVariables.get('bookTitle')).to.be.a('string').and.not.be.empty;",
+                  "})",
+                  "",
+                  "pm.test('POST /books - Negative check: does not return validation errors', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.not.have.property('error');",
+                  "    pm.expect(jsonData).to.not.have.property('errors');",
+                  "})"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.variables.set('tempBookTitle', pm.variables.replaceIn(\"{{$randomWords}}\"));",
+                  "",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-mock-response-code",
+                "value": "201",
+                "type": "text"
+              },
+              {
+                "key": "x-mock-response-name",
+                "value": "Dynamic Variables Mock Demo",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"{{tempBookTitle}}\",\n \"author\": \"{{$randomFirstName}} {{$randomLastName}}\",\n  \"genre\": \"fiction\",\n  \"yearPublished\": \"1967\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/books",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "books"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Rubber maroon\",\n    \"author\": \"Gabriel García Márquez\",\n    \"genre\": \"fiction\",\n    \"yearPublished\": 1967\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/books",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Sat, 12 Jun 2021 00:44:00 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "16"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "x-powered-by",
+                  "value": "Express"
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"10-MxB4y4MLcx6QDsp8b8vgp7iFMFo\""
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"7f04875b-9201-4c8f-b381-18370f9b2dfb\",\n    \"title\": \"Rubber maroon\",\n    \"author\": \"Gabriel García Márquez\",\n    \"genre\": \"fiction\",\n    \"yearPublished\": 1967,\n    \"checkedOut\": false,\n    \"isPermanentCollection\": false,\n    \"createdAt\": \"2024-09-27T15:48:46.962Z\"\n}"
+            },
+            {
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": {{bookId}},\n    \"author\":{{bookTitle}},\n    \"genre\": \"fiction\",\n    \"yearPublished\": 1967\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/books",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": 500,\n        \"message\": \"Internal Server Error\"\n    }\n}"
+            },
+            {
+              "name": "Dynamic Variables Mock Demo",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-mock-response-code",
+                    "value": "500",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"{{tempBookTitle}}\",\n    \"author\": \"{{$randomFirstName}} {{$randomLastName}}\",\n    \"genre\": \"fiction\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/books",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{ \n    \"title\": \"{{$body 'title'}}\", // Passes in bookTitle from the body of the request\n    \"author\": \"{{$randomFirstName}} {{$randomLastName}}\",\n    \"genre\": \"{{$body 'genre' 'fiction'}}\", \n    \"yearPublished\": {{$body 'yearPublished' '2020'}}// If body request does not have year published, it will default to year 2020\n}"
+            }
+          ]
+        },
+        {
+          "name": "Verify the book exists",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "",
+                  "pm.test(\"Response status code is 200\", function () {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Response has the required fields\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData).to.have.all.keys('id', 'title', 'author', 'genre', 'yearPublished', 'checkedOut', 'isPermanentCollection', 'createdAt');",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"The title must be a non-empty string\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData.title).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Year published is a valid year\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    const currentYear = new Date().getFullYear();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData.yearPublished).to.be.within(0, currentYear);",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"CreatedAt is in a valid date format\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.have.property('createdAt');",
+                  "    pm.expect(new Date(responseData.createdAt).getTime()).to.not.be.NaN;",
+                  "});",
+                  "",
+                  "pm.test('GET /books/:id - Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "})",
+                  "",
+                  "pm.test('GET /books/:id - Content-Type is JSON', function () {",
+                  "    pm.response.to.have.header('Content-Type');",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/i);",
+                  "})",
+                  "",
+                  "pm.test('GET /books/:id - Response has expected fields', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('object');",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('title');",
+                  "    pm.expect(jsonData).to.have.property('checkedOut');",
+                  "})",
+                  "",
+                  "pm.test('GET /books/:id - id matches collection variable bookId (if set)', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var expectedId = pm.collectionVariables.get('bookId');",
+                  "    if (expectedId) {",
+                  "        pm.expect(String(jsonData.id)).to.eql(String(expectedId));",
+                  "    } else {",
+                  "        pm.expect(true).to.eql(true);",
+                  "    }",
+                  "})",
+                  "",
+                  "pm.test('GET /books/:id - title matches collection variable bookTitle (if set)', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var expectedTitle = pm.collectionVariables.get('bookTitle');",
+                  "    if (expectedTitle) {",
+                  "        pm.expect(jsonData.title).to.eql(expectedTitle);",
+                  "    } else {",
+                  "        pm.expect(true).to.eql(true);",
+                  "    }",
+                  "})",
+                  "",
+                  "pm.test('GET /books/:id - Negative check: not an error payload', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.not.have.property('error');",
+                  "    pm.expect(jsonData).to.not.have.property('message', 'Not Found');",
+                  "})"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-mock-response-code",
+                "value": "200",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/books/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "books",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{bookId}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/books/:id",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"7f04875b-9201-4c8f-b381-18370f9b2dfb\",\n    \"title\": \"Rubber maroon\",\n    \"author\": \"Gabriel García Márquez\",\n    \"genre\": \"fiction\",\n    \"yearPublished\": 1967,\n    \"checkedOut\": false,\n    \"isPermanentCollection\": false,\n    \"createdAt\": \"2024-09-27T15:59:14.438Z\"\n}"
+            },
+            {
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url}}/books/:id",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{bookId}}"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": 500,\n        \"message\": \"Internal Server Error\"\n    }\n}"
+            },
+            {
+              "name": "Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url}}/books/:id",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{bookId}}"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": 404,\n        \"message\": \"The book you are searching for cannot be found.\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Checkout new book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "",
+                  "pm.test(\"Response status code is 200\", function () {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Response has required fields\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData).to.have.all.keys('id', 'title', 'author', 'genre', 'yearPublished', 'checkedOut', 'isPermanentCollection', 'createdAt');",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Title is a non-empty string\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData.title).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Year published is a valid year\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    const currentYear = new Date().getFullYear();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData.yearPublished).to.be.a('number').and.to.be.greaterThan(0).and.to.be.at.most(currentYear);",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Checked out status is a boolean value\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData.checkedOut).to.be.a('boolean');",
+                  "});",
+                  "",
+                  "pm.test('PATCH /books/:id - Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "})",
+                  "",
+                  "pm.test('PATCH /books/:id - Content-Type is JSON', function () {",
+                  "    pm.response.to.have.header('Content-Type');",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/i);",
+                  "})",
+                  "",
+                  "pm.test('PATCH /books/:id - Response has expected fields', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('object');",
+                  "    pm.expect(jsonData).to.have.property('id');",
+                  "    pm.expect(jsonData).to.have.property('checkedOut');",
+                  "    pm.expect(jsonData.checkedOut).to.be.a('boolean');",
+                  "})",
+                  "",
+                  "pm.test('PATCH /books/:id - Status change: checkedOut is true', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.checkedOut).to.eql(true);",
+                  "})",
+                  "",
+                  "pm.test('PATCH /books/:id - id matches collection variable bookId (if set)', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var expectedId = pm.collectionVariables.get('bookId');",
+                  "    if (expectedId) {",
+                  "        pm.expect(String(jsonData.id)).to.eql(String(expectedId));",
+                  "    } else {",
+                  "        pm.expect(true).to.eql(true);",
+                  "    }",
+                  "})",
+                  "",
+                  "pm.test('PATCH /books/:id - Negative check: does not return an error object', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.not.have.property('error');",
+                  "    pm.expect(jsonData).to.not.have.property('errors');",
+                  "})"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "x-mock-response-code",
+                "value": "200",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"checkedOut\": true}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/books/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "books",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{bookId}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/books/:id",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"7f04875b-9201-4c8f-b381-18370f9b2dfb\",\n    \"title\": \"Rubber maroon\",\n    \"author\": \"Gabriel García Márquez\",\n    \"genre\": \"fiction\",\n    \"yearPublished\": 1967,\n    \"checkedOut\": false,\n    \"isPermanentCollection\": false,\n    \"createdAt\": \"2024-09-27T15:59:14.438Z\"\n}"
+            },
+            {
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url}}/books/:id",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{bookId}}"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": 500,\n        \"message\": \"Internal Server Error\"\n    }\n}"
+            },
+            {
+              "name": "Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url}}/books/:id",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{bookId}}"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": 404,\n        \"message\": \"The book you are searching for cannot be found.\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Verify book isCheckedOut",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "",
+                  "pm.test(\"Response status code is 200\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(200);",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Response content type is application/json\", function () {",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.include(\"application/json\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"Response has the required fields\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData).to.have.all.keys('id', 'title', 'author', 'genre', 'yearPublished', 'checkedOut', 'isPermanentCollection', 'createdAt');",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"YearPublished is a valid integer and within a reasonable range\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.have.property('yearPublished');",
+                  "    pm.expect(responseData.yearPublished).to.be.a('number').and.to.be.within(1450, new Date().getFullYear(), \"Year must be a valid integer within a reasonable range\");",
+                  "});",
+                  "",
+                  "",
+                  "pm.test(\"CreatedAt is in a valid date format\", function () {",
+                  "    const responseData = pm.response.json();",
+                  "    ",
+                  "    pm.expect(responseData).to.be.an('object');",
+                  "    pm.expect(responseData.createdAt).to.exist;",
+                  "    pm.expect(new Date(responseData.createdAt).getTime()).to.not.be.NaN;",
+                  "});",
+                  "",
+                  "pm.test('GET /books/:id (post-checkout) - Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "})",
+                  "",
+                  "pm.test('GET /books/:id (post-checkout) - Content-Type is JSON', function () {",
+                  "    pm.response.to.have.header('Content-Type');",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/i);",
+                  "})",
+                  "",
+                  "pm.test('GET /books/:id (post-checkout) - checkedOut is true', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('object');",
+                  "    pm.expect(jsonData).to.have.property('checkedOut');",
+                  "    pm.expect(jsonData.checkedOut).to.eql(true);",
+                  "})",
+                  "",
+                  "pm.test('GET /books/:id (post-checkout) - id and title are consistent with collection variables (if set)', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    var expectedId = pm.collectionVariables.get('bookId');",
+                  "    var expectedTitle = pm.collectionVariables.get('bookTitle');",
+                  "    if (expectedId) {",
+                  "        pm.expect(String(jsonData.id)).to.eql(String(expectedId));",
+                  "    }",
+                  "    if (expectedTitle) {",
+                  "        pm.expect(jsonData.title).to.eql(expectedTitle);",
+                  "    }",
+                  "})",
+                  "",
+                  "pm.test('GET /books/:id (post-checkout) - Negative check: not an error payload', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.not.have.property('error');",
+                  "    pm.expect(jsonData).to.not.have.property('errors');",
+                  "})"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-mock-response-code",
+                "value": "200",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{url}}/books/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "books",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{bookId}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{url}}/books/:id",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"7f04875b-9201-4c8f-b381-18370f9b2dfb\",\n    \"title\": \"Rubber maroon\",\n    \"author\": \"Gabriel García Márquez\",\n    \"genre\": \"fiction\",\n    \"yearPublished\": 1967,\n    \"checkedOut\": false,\n    \"isPermanentCollection\": false,\n    \"createdAt\": \"2024-09-27T15:59:14.438Z\"\n}"
+            },
+            {
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url}}/books/:id",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{bookId}}"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": 500,\n        \"message\": \"Internal Server Error\"\n    }\n}"
+            },
+            {
+              "name": "Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{url}}/books/:id",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "books",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "{{bookId}}"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": 404,\n        \"message\": \"The book you are searching for cannot be found.\"\n    }\n}"
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "apikey",
+        "apikey": [
+          {
+            "key": "value",
+            "value": "{{libraryApiKey}}",
+            "type": "string"
+          },
+          {
+            "key": "key",
+            "value": "api-key",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "value",
+        "value": "{{libraryApiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "api-key",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          "// Guard in collection scripts",
+          "// Similar to Newman, you can add a pre-request script that skips unless the iteration matches:",
+          "",
+          "// if (pm.info.iteration !== 21) {",
+          "//     postman.setNextRequest(null);",
+          "// }"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "pm.test(\"Status code is 200\", function () {",
+          "    pm.response.to.have.status(200);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "url",
+      "value": "https://library-api.postmanlabs.com"
+    },
+    {
+      "key": "bookId",
+      "value": ""
+    },
+    {
+      "key": "bookTitle",
+      "value": ""
+    },
+    {
+      "key": "test",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
