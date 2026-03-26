@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/books?genre=fiction&checkedOut=false&search=borges"
+method: GET
+headers:
+  Accept: application/json
+queryParams:
+  - key: genre
+    value: fiction
+    description: a genre to filter for
+  - key: checkedOut
+    value: "false"
+    description: a value true or false
+  - key: search
+    value: borges
+    description: a search term to match against author or title
+examples: ./.resources/Get books.resources/examples
+order: 2000

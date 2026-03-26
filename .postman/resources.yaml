@@ -1,0 +1,17 @@
+# Use this workspace to collaborate
+workspace:
+  id: 2e4de2fb-181f-439a-ab11-72f478573160
+
+localResources:
+  specs:
+    - ../docsspec.yaml
+    - ../index.yaml
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+cloudResources:
+  specs:
+    ../docsspec.yaml: 9fb04b27-243c-48c2-afc5-fef7a776a259
+    ../index.yaml: baf305b9-c5b7-4996-a97f-6b680ea6d906
+  collections:
+    ../postman/collections/LibraryAPI: 51415495-82ea0c7c-03ea-4bc5-9699-1d160d4486bb
+    ../postman/collections/Book E2E Workflow: 51415495-65d9ce25-3820-4007-9eb2-29acf78c32de

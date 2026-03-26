@@ -1,0 +1,27 @@
+$kind: http-example
+request:
+  url: "{{url}}/books/:id"
+  method: GET
+  headers:
+    Content-Type: application/json
+  pathVariables:
+    id: "10"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+          "id": "7f04875b-9201-4c8f-b381-18370f9b2dfb",
+          "title": "Rubber maroon",
+          "author": "Gabriel García Márquez",
+          "genre": "fiction",
+          "yearPublished": 1967,
+          "checkedOut": false,
+          "isPermanentCollection": false,
+          "createdAt": "2024-09-27T15:59:14.438Z"
+      }
+order: 1000

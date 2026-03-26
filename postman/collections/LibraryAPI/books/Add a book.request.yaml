@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{baseUrl}}/books"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "The Four Agreements",
+      "author": "don Miguel Ruiz",
+      "genre": "self-help",
+      "yearPublished": 1997
+    }
+auth:
+  type: apikey
+  credentials:
+    key: api-key
+    value: "{{apiKey}}"
+    in: header
+examples: ./.resources/Add a book.resources/examples
+order: 3000

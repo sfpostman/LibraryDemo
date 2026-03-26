@@ -1,0 +1,21 @@
+$kind: http-example
+request:
+  url: "{{url}}/books/:id"
+  method: GET
+  pathVariables:
+    id: "{{bookId}}"
+response:
+  statusCode: 404
+  statusText: Not Found
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+          "error": {
+              "code": 404,
+              "message": "The book you are searching for cannot be found."
+          }
+      }
+order: 3000

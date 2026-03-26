@@ -1,0 +1,53 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/books"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: api-key
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+  body:
+    type: json
+    content: |-
+      {
+        "title": "The Four Agreements",
+        "author": "don Miguel Ruiz",
+        "genre": "self-help",
+        "yearPublished": 1997
+      }
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: >-
+      {
+        "message": "body must have required property 'genre', body/yearPublished must be integer",
+        "errors": [
+          {
+            "instancePath": "",
+            "schemaPath": "#/required",
+            "keyword": "required",
+            "params": {
+              "missingProperty": "genre"
+            },
+            "message": "must have required property 'genre'"
+          },
+          {
+            "instancePath": "/yearPublished",
+            "schemaPath": "#/properties/yearPublished/type",
+            "keyword": "type",
+            "params": {
+              "type": "integer"
+            },
+            "message": "must be integer"
+          }
+        ]
+      }
+order: 2000

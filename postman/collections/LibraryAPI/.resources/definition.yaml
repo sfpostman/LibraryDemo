@@ -1,0 +1,44 @@
+$kind: collection
+description: |-
+  Manage books in the Postman library using this API. This API is designed to teach the basics of using APIs and Postman!
+
+  Note that all non-permanent collection books are automatically deleted on a three-day rolling basis
+
+  ## Permanent collection books
+
+  Some books are part of the **permanent collection** and cannot be edited or deleted. These books have the property `isPermanentCollection: true`
+
+  ## Authorizing requests
+
+  This API requires Authorization to make POST, PATCH, and DELETE requests.
+
+  You will need to set the API key in the collection variables to `postmanrulz` in order to make those requests.
+
+  In the real world you would generate an API Key with an API's developer portal service. This is just a training API so we have provided an API key for you!
+
+  Learn more about authorizing API requests in Postman [here](https://learning.postman.com/docs/sending-requests/authorization/).
+
+  ## This is a public API!
+
+  Any book you add or update will be publicly visible to all users of this API. Please be respectful and follow these rules:
+
+  - Only modify books you have added yourself
+      
+  - Understand that books in this API may be deleted at any time
+      
+
+  ## What's different from the old [Postman Library API](https://www.postman.com/postman/workspace/postman-classroom-program/collection/15567703-da68bf1c-1aae-4f14-a79b-95926a816366?ctx=documentation)?
+
+  The old Library API was used in the [Postman Classroom Program](https://www.postman.com/postman/workspace/postman-classroom-program/overview) modules. We made some improvements for v2:
+
+  - **API Key Auth for POST/PATCH/DELETE requests**. Practice authorization!
+      
+  - **POST/PATCH requests now return book info such as** **`id`**. This enables possibilities with scripting based on the response.
+      
+  - **Dedicated public workspace and docs**. You can view this API's schema from the "API" tab in the public workspace. Easily find and fork this API or docs by searching "Postman Library API v2"
+      
+  - **Automatic cleanup**. Non-permanent collection books are automatically deleted on a rolling three-day basis.
+      
+  - **Profanity filters**. Cleans up book titles and author names
+variables:
+  baseUrl: https://library-api.postmanlabs.com

@@ -1,0 +1,19 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/books/:id"
+  method: DELETE
+  headers:
+    - key: api-key
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+  pathVariables:
+    - key: id
+      value: 29f47d22-1062-479d-be58-2d8db3ecb8be
+      description: (Required) the id of a book
+response:
+  statusCode: 204
+  statusText: No Content
+  body:
+    type: text
+    content: ""
+order: 1000

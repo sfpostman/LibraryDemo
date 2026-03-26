@@ -1,0 +1,19 @@
+$kind: http-example
+request:
+  url: "{{url}}/books"
+  method: GET
+response:
+  statusCode: 500
+  statusText: Internal Server Error
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+          "error": {
+              "code": 500,
+              "message": "Internal Server Error"
+          }
+      }
+order: 1000

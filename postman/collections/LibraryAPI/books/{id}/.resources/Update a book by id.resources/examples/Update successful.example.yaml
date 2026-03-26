@@ -1,0 +1,41 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/books/:id"
+  method: PATCH
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: api-key
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+  pathVariables:
+    - key: id
+      value: 29f47d22-1062-479d-be58-2d8db3ecb8be
+      description: (Required) the id of a book
+  body:
+    type: json
+    content: |-
+      {
+        "checkedOut": true
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "id": "29cd820f-82f9-4b45-a7f4-0924111b5b89",
+        "title": "Ficciones",
+        "author": "Jorge Luis Borges",
+        "genre": "fiction",
+        "yearPublished": 1944,
+        "checkedOut": true,
+        "isPermanentCollection": true,
+        "createdAt": "2022-03-04T22:10:24.526Z"
+      }
+order: 1000

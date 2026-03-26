@@ -1,0 +1,22 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/books/:id"
+  method: GET
+  headers:
+    Accept: application/json
+  pathVariables:
+    - key: id
+      value: 29f47d22-1062-479d-be58-2d8db3ecb8be
+      description: (Required) the id of a book
+response:
+  statusCode: 404
+  statusText: Not Found
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: >-
+      {
+        "message": "Book with id '29cd820f-82f9-4b45-a7f4-0924111b5b80 not found"
+      }
+order: 2000

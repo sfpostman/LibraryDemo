@@ -1,0 +1,106 @@
+$kind: http-request
+url: "{{url}}/books/:id"
+method: GET
+headers:
+  x-mock-response-code: "200"
+pathVariables:
+  id: "{{bookId}}"
+scripts:
+  - type: afterResponse
+    code: >-
+      
+      pm.test("Response status code is 200", function () {
+          pm.expect(pm.response.code).to.equal(200);
+      });
+
+
+
+      pm.test("Response has the required fields", function () {
+          const responseData = pm.response.json();
+          
+          pm.expect(responseData).to.be.an('object');
+          pm.expect(responseData).to.have.all.keys('id', 'title', 'author', 'genre', 'yearPublished', 'checkedOut', 'isPermanentCollection', 'createdAt');
+      });
+
+
+
+      pm.test("The title must be a non-empty string", function () {
+          const responseData = pm.response.json();
+          
+          pm.expect(responseData).to.be.an('object');
+          pm.expect(responseData.title).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, "Value should not be empty");
+      });
+
+
+
+      pm.test("Year published is a valid year", function () {
+          const responseData = pm.response.json();
+          const currentYear = new Date().getFullYear();
+          
+          pm.expect(responseData).to.be.an('object');
+          pm.expect(responseData.yearPublished).to.be.within(0, currentYear);
+      });
+
+
+
+      pm.test("CreatedAt is in a valid date format", function () {
+          const responseData = pm.response.json();
+          
+          pm.expect(responseData).to.have.property('createdAt');
+          pm.expect(new Date(responseData.createdAt).getTime()).to.not.be.NaN;
+      });
+
+
+      pm.test('GET /books/:id - Status code is 200', function () {
+          pm.response.to.have.status(200);
+      })
+
+
+      pm.test('GET /books/:id - Content-Type is JSON', function () {
+          pm.response.to.have.header('Content-Type');
+          pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\/json/i);
+      })
+
+
+      pm.test('GET /books/:id - Response has expected fields', function () {
+          var jsonData = pm.response.json();
+          pm.expect(jsonData).to.be.an('object');
+          pm.expect(jsonData).to.have.property('id');
+          pm.expect(jsonData).to.have.property('title');
+          pm.expect(jsonData).to.have.property('checkedOut');
+      })
+
+
+      pm.test('GET /books/:id - id matches collection variable bookId (if set)',
+      function () {
+          var jsonData = pm.response.json();
+          var expectedId = pm.collectionVariables.get('bookId');
+          if (expectedId) {
+              pm.expect(String(jsonData.id)).to.eql(String(expectedId));
+          } else {
+              pm.expect(true).to.eql(true);
+          }
+      })
+
+
+      pm.test('GET /books/:id - title matches collection variable bookTitle (if
+      set)', function () {
+          var jsonData = pm.response.json();
+          var expectedTitle = pm.collectionVariables.get('bookTitle');
+          if (expectedTitle) {
+              pm.expect(jsonData.title).to.eql(expectedTitle);
+          } else {
+              pm.expect(true).to.eql(true);
+          }
+      })
+
+
+      pm.test('GET /books/:id - Negative check: not an error payload', function
+      () {
+          var jsonData = pm.response.json();
+          pm.expect(jsonData).to.not.have.property('error');
+          pm.expect(jsonData).to.not.have.property('message', 'Not Found');
+      })
+    language: text/javascript
+examples: ./.resources/Verify the book exists.resources/examples
+order: 3000

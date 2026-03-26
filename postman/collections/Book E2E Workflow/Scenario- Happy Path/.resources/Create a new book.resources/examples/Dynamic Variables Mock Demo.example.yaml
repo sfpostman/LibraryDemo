@@ -1,0 +1,31 @@
+$kind: http-example
+request:
+  url: "{{url}}/books"
+  method: POST
+  headers:
+    - key: x-mock-response-code
+      value: "500"
+      disabled: true
+  body:
+    type: json
+    content: |-
+      {
+          "title": "{{tempBookTitle}}",
+          "author": "{{$randomFirstName}} {{$randomLastName}}",
+          "genre": "fiction"
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: >-
+      { 
+          "title": "{{$body 'title'}}", // Passes in bookTitle from the body of the request
+          "author": "{{$randomFirstName}} {{$randomLastName}}",
+          "genre": "{{$body 'genre' 'fiction'}}", 
+          "yearPublished": {{$body 'yearPublished' '2020'}}// If body request does not have year published, it will default to year 2020
+      }
+order: 3000

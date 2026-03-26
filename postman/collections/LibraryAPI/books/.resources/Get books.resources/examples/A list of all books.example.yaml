@@ -1,0 +1,47 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/books?genre=fiction&checkedOut=false&search=borges"
+  method: GET
+  headers:
+    Accept: application/json
+  queryParams:
+    - key: genre
+      value: fiction
+      description: a genre to filter for
+    - key: checkedOut
+      value: "false"
+      description: a value true or false
+    - key: search
+      value: borges
+      description: a search term to match against author or title
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      [
+        {
+          "id": "50b1a8e9-78f0-4a80-b350-8fdf8fb1b8b8",
+          "title": "A Thousand Splendid Suns",
+          "author": "Khaled Hosseini",
+          "genre": "fiction",
+          "yearPublished": 2007,
+          "checkedOut": false,
+          "isPermanentCollection": true,
+          "createdAt": "2022-03-04T22:10:24.526Z"
+        },
+        {
+          "id": "29cd820f-82f9-4b45-a7f4-0924111b5b89",
+          "title": "Ficciones",
+          "author": "Jorge Luis Borges",
+          "genre": "fiction",
+          "yearPublished": 1944,
+          "checkedOut": false,
+          "isPermanentCollection": true,
+          "createdAt": "2022-03-04T22:10:24.526Z"
+        }
+      ]
+order: 1000

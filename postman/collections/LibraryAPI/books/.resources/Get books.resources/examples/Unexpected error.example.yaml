@@ -1,0 +1,29 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/books?genre=fiction&checkedOut=false&search=borges"
+  method: GET
+  headers:
+    Accept: application/json
+  queryParams:
+    - key: genre
+      value: fiction
+      description: a genre to filter for
+    - key: checkedOut
+      value: "false"
+      description: a value true or false
+    - key: search
+      value: borges
+      description: a search term to match against author or title
+response:
+  statusCode: 500
+  statusText: Internal Server Error
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "status": "error",
+        "message": "something"
+      }
+order: 2000

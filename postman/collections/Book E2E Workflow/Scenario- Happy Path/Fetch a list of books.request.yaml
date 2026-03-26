@@ -1,0 +1,101 @@
+$kind: http-request
+url: "{{url}}/books"
+method: GET
+headers:
+  x-mock-response-code: "500"
+scripts:
+  - type: afterResponse
+    code: >-
+      
+      pm.test("Response status code is 200", function () {
+          pm.expect(pm.response.code).to.eql(200);
+      });
+
+
+
+      pm.test("Response is an array with at least one book object", function ()
+      {
+          const responseData = pm.response.json();
+          
+          pm.expect(responseData).to.be.an('array').that.is.not.empty;
+      });
+
+
+
+      pm.test("Each book object has the required fields", function () {
+          const responseData = pm.response.json();
+
+          pm.expect(responseData).to.be.an('array');
+
+          responseData.forEach(book => {
+              pm.expect(book).to.be.an('object');
+              pm.expect(book).to.have.all.keys('id', 'title', 'author', 'genre', 'yearPublished', 'checkedOut', 'isPermanentCollection', 'createdAt');
+          });
+      });
+
+
+
+      pm.test("The title must be a non-empty string", function () {
+          const responseData = pm.response.json();
+          
+          pm.expect(responseData).to.be.an('array').that.is.not.empty;
+          responseData.forEach(book => {
+              pm.expect(book.title).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, "Title should not be empty");
+          });
+      });
+
+
+      pm.test('GET /books - Status code is 200', function () {
+          pm.response.to.have.status(200);
+      })
+
+
+      pm.test('GET /books - Content-Type is JSON', function () {
+          pm.response.to.have.header('Content-Type');
+          pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\/json/i);
+      })
+
+
+      pm.test('GET /books - Response is an array of books', function () {
+          var jsonData = pm.response.json();
+          pm.expect(jsonData).to.be.an('array');
+      })
+
+
+      pm.test('GET /books - Each book has expected fields & types', function ()
+      {
+          var jsonData = pm.response.json();
+          pm.expect(jsonData).to.be.an('array');
+          jsonData.forEach(function (book) {
+              pm.expect(book).to.be.an('object');
+              pm.expect(book).to.have.property('id');
+              pm.expect(book.id).to.satisfy(function (v) {
+                  return typeof v === 'string' || typeof v === 'number';
+              });
+              pm.expect(book).to.have.property('title');
+              pm.expect(book.title).to.be.a('string');
+              if (book.hasOwnProperty('author'))
+                  pm.expect(book.author).to.be.a('string');
+              if (book.hasOwnProperty('genre'))
+                  pm.expect(book.genre).to.be.a('string');
+              if (book.hasOwnProperty('yearPublished'))
+                  pm.expect(book.yearPublished).to.satisfy(function (v) {
+                      return typeof v === 'number' || typeof v === 'string';
+                  });
+              pm.expect(book).to.have.property('checkedOut');
+              pm.expect(book.checkedOut).to.be.a('boolean');
+              if (book.hasOwnProperty('isPermanentCollection'))
+                  pm.expect(book.isPermanentCollection).to.be.a('boolean');
+          });
+      })
+
+
+      pm.test('GET /books - Negative check: does not return an error object',
+      function () {
+          var jsonData = pm.response.json();
+          pm.expect(jsonData).to.not.have.property('error');
+          pm.expect(jsonData).to.not.have.property('errors');
+      })
+    language: text/javascript
+examples: ./.resources/Fetch a list of books.resources/examples
+order: 1000

@@ -1,0 +1,33 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/books"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: api-key
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+  body:
+    type: json
+    content: |-
+      {
+        "title": "The Four Agreements",
+        "author": "don Miguel Ruiz",
+        "genre": "self-help",
+        "yearPublished": 1997
+      }
+response:
+  statusCode: 401
+  statusText: Unauthorized
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: >-
+      {
+        "message": "Invalid or missing credentials. Make sure you add 'api-key' to the request headers with a valid value"
+      }
+order: 3000

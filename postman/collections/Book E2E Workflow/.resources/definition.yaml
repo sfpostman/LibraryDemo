@@ -1,0 +1,58 @@
+$kind: collection
+description: |-
+  # 🤝 Authorization Flow
+
+  <img src="https://content.pstmn.io/874faa43-1838-4e73-b3e6-35e0d30911dc/MV9uaGVmWnRKdFAzX0xoTUtMdWVVek1nLmdpZg==">
+
+  # 🚀 API Flow
+
+  <img src="https://content.pstmn.io/94d8b05a-57fe-4bd7-8b5c-2a1bc787e67b/aW1hZ2UucG5n" width="1663" height="1118">
+
+  # ⚠️ Common Gotchas
+
+  - Use a valid XYZ
+      
+  - Beware of ABC
+      
+
+  # Required file:
+
+  - [CSV file](https://docs.google.com/spreadsheets/d/1JKilNNN0Ts5tWJf6ae_HKUY9x7Bwx3CiLPJ0G4C9Ik8/edit?usp=sharing)
+      
+
+  Contact Support:  
+  Name: Ronak  
+  Email: [admin@admin.com](https://mailto:admin@admin.com)
+variables:
+  url: ""
+  bookId: ""
+  bookTitle: ""
+  test: ""
+scripts:
+  - type: http:beforeRequest
+    code: >-
+      // Guard in collection scripts
+
+      // Similar to Newman, you can add a pre-request script that skips unless
+      the iteration matches:
+
+
+      // if (pm.info.iteration !== 21) {
+
+      //     postman.setNextRequest(null);
+
+      // }
+    language: text/javascript
+  - type: http:afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+    language: text/javascript
+auth:
+  - id: f83c8239-91bd-4b9f-bc0c-fe2f96ff44cd
+    type: apikey
+    name: apikey auth
+    credentials:
+      value: "{{libraryApiKey}}"
+      key: api-key

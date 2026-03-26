@@ -1,0 +1,40 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/books"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+    - key: Accept
+      value: application/json
+    - key: api-key
+      value: <API Key>
+      description: "Added as a part of security scheme: apikey"
+  body:
+    type: json
+    content: |-
+      {
+        "title": "The Four Agreements",
+        "author": "don Miguel Ruiz",
+        "genre": "self-help",
+        "yearPublished": 1997
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "id": "6d63c5b9-74ed-40ff-9415-81589189f690",
+        "title": "The Four Agreements",
+        "author": "don Miguel Ruiz",
+        "genre": "self-help",
+        "yearPublished": 1997,
+        "checkedOut": false,
+        "isPermanentCollection": false,
+        "createdAt": "2022-03-17T16:09:41.950Z"
+      }
+order: 1000

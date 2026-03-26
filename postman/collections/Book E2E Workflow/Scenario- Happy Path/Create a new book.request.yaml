@@ -1,0 +1,113 @@
+$kind: http-request
+url: "{{url}}/books"
+method: POST
+headers:
+  - key: x-mock-response-code
+    value: "201"
+  - key: x-mock-response-name
+    value: Dynamic Variables Mock Demo
+    disabled: true
+body:
+  type: json
+  content: ""
+scripts:
+  - type: afterResponse
+    code: >-
+      // collection.set()var jsonData = pm.response.json(); 
+
+      var jsonData = pm.response.json(); 
+
+      pm.collectionVariables.set("bookId", jsonData.id);
+
+      pm.collectionVariables.set("bookTitle", jsonData.title);
+
+
+
+      pm.test("Response status code is 201", function () {
+          pm.expect(pm.response.code).to.eql(201);
+      });
+
+
+
+      pm.test("Validate the presence of required fields", function () {
+          const responseData = pm.response.json();
+          
+          pm.expect(responseData).to.be.an('object');
+          pm.expect(responseData).to.have.all.keys('id', 'title', 'author', 'genre', 'yearPublished', 'checkedOut', 'isPermanentCollection', 'createdAt');
+      });
+
+
+
+      pm.test("YearPublished is a valid year", function () {
+          const responseData = pm.response.json();
+          const currentYear = new Date().getFullYear();
+          
+          pm.expect(responseData).to.be.an('object');
+          pm.expect(responseData.yearPublished).to.be.a('number').that.is.greaterThan(0).and.is.at.most(currentYear);
+      });
+
+
+
+      pm.test("CreatedAt is in a valid date format", function () {
+          const responseData = pm.response.json();
+          
+          pm.expect(responseData).to.have.property('createdAt');
+          pm.expect(new Date(responseData.createdAt).getTime()).to.not.be.NaN;
+      });
+
+
+      pm.test('POST /books - Status code is 201 (or 200)', function () {
+          pm.expect([
+              200,
+              201
+          ]).to.include(pm.response.code);
+      })
+
+
+      pm.test('POST /books - Content-Type is JSON', function () {
+          pm.response.to.have.header('Content-Type');
+          pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\/json/i);
+      })
+
+
+      pm.test('POST /books - Response body has created book fields', function ()
+      {
+          var jsonData = pm.response.json();
+          pm.expect(jsonData).to.be.an('object');
+          pm.expect(jsonData).to.have.property('id');
+          pm.expect(jsonData.id).to.satisfy(function (v) {
+              return typeof v === 'string' || typeof v === 'number';
+          });
+          pm.expect(jsonData).to.have.property('title');
+          pm.expect(jsonData.title).to.be.a('string');
+          pm.expect(jsonData).to.have.property('checkedOut');
+          pm.expect(jsonData.checkedOut).to.be.a('boolean');
+      })
+
+
+      pm.test('POST /books - Persist bookId and bookTitle as collection
+      variables', function () {
+          var jsonData = pm.response.json();
+          pm.collectionVariables.set('bookId', String(jsonData.id));
+          pm.collectionVariables.set('bookTitle', jsonData.title);
+          pm.expect(pm.collectionVariables.get('bookId')).to.be.a('string').and.not.be.empty;
+          pm.expect(pm.collectionVariables.get('bookTitle')).to.be.a('string').and.not.be.empty;
+      })
+
+
+      pm.test('POST /books - Negative check: does not return validation errors',
+      function () {
+          var jsonData = pm.response.json();
+          pm.expect(jsonData).to.not.have.property('error');
+          pm.expect(jsonData).to.not.have.property('errors');
+      })
+    language: text/javascript
+  - type: beforeRequest
+    code: >+
+      pm.variables.set('tempBookTitle',
+      pm.variables.replaceIn("{{$randomWords}}"));
+
+
+    language: text/javascript
+examples: ./.resources/Create a new book.resources/examples
+order: 2000

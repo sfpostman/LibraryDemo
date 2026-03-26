@@ -1,0 +1,354 @@
+openapi: 3.0.0
+info:
+  title: Book E2E Workflow
+  version: 1.0.0
+  description: >-
+    # 🤝 Authorization Flow
+
+
+    <img
+    src="https://content.pstmn.io/874faa43-1838-4e73-b3e6-35e0d30911dc/MV9uaGVmWnRKdFAzX0xoTUtMdWVVek1nLmdpZg==">
+
+
+    # 🚀 API Flow
+
+
+    <img
+    src="https://content.pstmn.io/94d8b05a-57fe-4bd7-8b5c-2a1bc787e67b/aW1hZ2UucG5n"
+    width="1663" height="1118">
+
+
+    # ⚠️ Common Gotchas
+
+
+    - Use a valid XYZ
+        
+    - Beware of ABC
+        
+
+    # Required file:
+
+
+    - [CSV
+    file](https://docs.google.com/spreadsheets/d/1JKilNNN0Ts5tWJf6ae_HKUY9x7Bwx3CiLPJ0G4C9Ik8/edit?usp=sharing)
+        
+
+    Contact Support:  
+
+    Name: Ronak  
+
+    Email: [admin@admin.com](https://mailto:admin@admin.com)
+servers:
+  - url: '{{url}}'
+paths:
+  /books:
+    get:
+      summary: Fetch a list of books
+      parameters:
+        - name: x-mock-response-code
+          in: header
+          schema:
+            type: integer
+          example: '500'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    format: color
+                  message:
+                    type: string
+              example:
+                code: '200'
+                message: success
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+              example:
+                error:
+                  code: 500
+                  message: Internal Server Error
+      tags:
+        - 'Scenario: Happy Path'
+    post:
+      summary: Create a new book
+      parameters:
+        - name: x-mock-response-code
+          in: header
+          schema:
+            type: integer
+          example: '201'
+        - name: x-mock-response-name
+          in: header
+          schema:
+            type: string
+          example: Dynamic Variables Mock Demo
+      responses:
+        '201':
+          description: Success
+          headers:
+            Date:
+              schema:
+                type: string
+              example: Sat, 12 Jun 2021 00:44:00 GMT
+            Content-Length:
+              schema:
+                type: integer
+              example: '16'
+            Connection:
+              schema:
+                type: string
+              example: keep-alive
+            x-powered-by:
+              schema:
+                type: string
+              example: Express
+            etag:
+              schema:
+                type: string
+              example: W/"10-MxB4y4MLcx6QDsp8b8vgp7iFMFo"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  author:
+                    type: string
+                  genre:
+                    type: string
+                  yearPublished:
+                    type: integer
+                  checkedOut:
+                    type: boolean
+                  isPermanentCollection:
+                    type: boolean
+                  createdAt:
+                    type: string
+                    format: date-time
+              example:
+                id: 7f04875b-9201-4c8f-b381-18370f9b2dfb
+                title: Rubber maroon
+                author: Gabriel García Márquez
+                genre: fiction
+                yearPublished: 1967
+                checkedOut: false
+                isPermanentCollection: false
+                createdAt: '2024-09-27T15:48:46.962Z'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+              example:
+                error:
+                  code: 500
+                  message: Internal Server Error
+      tags:
+        - 'Scenario: Happy Path'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /books/{id}:
+    get:
+      summary: Verify the book exists
+      parameters:
+        - name: x-mock-response-code
+          in: header
+          schema:
+            type: integer
+          example: '200'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  author:
+                    type: string
+                  genre:
+                    type: string
+                  yearPublished:
+                    type: integer
+                  checkedOut:
+                    type: boolean
+                  isPermanentCollection:
+                    type: boolean
+                  createdAt:
+                    type: string
+                    format: date-time
+              example:
+                id: 7f04875b-9201-4c8f-b381-18370f9b2dfb
+                title: Rubber maroon
+                author: Gabriel García Márquez
+                genre: fiction
+                yearPublished: 1967
+                checkedOut: false
+                isPermanentCollection: false
+                createdAt: '2024-09-27T15:59:14.438Z'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+              example:
+                error:
+                  code: 404
+                  message: The book you are searching for cannot be found.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+              example:
+                error:
+                  code: 500
+                  message: Internal Server Error
+      tags:
+        - 'Scenario: Happy Path'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '{{bookId}}'
+    patch:
+      summary: Checkout new book
+      parameters:
+        - name: x-mock-response-code
+          in: header
+          schema:
+            type: integer
+          example: '200'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  author:
+                    type: string
+                  genre:
+                    type: string
+                  yearPublished:
+                    type: integer
+                  checkedOut:
+                    type: boolean
+                  isPermanentCollection:
+                    type: boolean
+                  createdAt:
+                    type: string
+                    format: date-time
+              example:
+                id: 7f04875b-9201-4c8f-b381-18370f9b2dfb
+                title: Rubber maroon
+                author: Gabriel García Márquez
+                genre: fiction
+                yearPublished: 1967
+                checkedOut: false
+                isPermanentCollection: false
+                createdAt: '2024-09-27T15:59:14.438Z'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+              example:
+                error:
+                  code: 404
+                  message: The book you are searching for cannot be found.
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+              example:
+                error:
+                  code: 500
+                  message: Internal Server Error
+      tags:
+        - 'Scenario: Happy Path'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
