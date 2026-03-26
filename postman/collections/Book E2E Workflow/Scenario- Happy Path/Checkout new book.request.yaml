@@ -7,7 +7,7 @@ pathVariables:
   id: "{{bookId}}"
 body:
   type: json
-  content: ""
+  content: '{"checkedOut": true}'
 scripts:
   - type: afterResponse
     code: >-

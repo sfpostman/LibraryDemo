@@ -39,7 +39,7 @@ info:
 
     Email: [admin@admin.com](https://mailto:admin@admin.com)
 servers:
-  - url: '{{url}}'
+  - url: https://library-api.postmanlabs.com
 paths:
   /books:
     get:
@@ -86,6 +86,79 @@ paths:
                   message: Internal Server Error
       tags:
         - 'Scenario: Happy Path'
+      description: >-
+        ### Get Books
+
+
+        This endpoint retrieves a list of books from the collection. It returns
+        various details about each book, including its title, author, genre,
+        publication year, and status regarding checkout and permanence in the
+        collection.
+
+
+        #### Request
+
+
+        - **Method**: GET
+            
+        - **URL**: `{{url}}/books`
+            
+
+        #### Response
+
+
+        - **Status Code**: 200 OK
+            
+        - **Content-Type**: application/json
+            
+        - **Response Body**: An array of book objects, each containing the
+        following fields:
+            
+            - `id`: Unique identifier for the book.
+                
+            - `title`: Title of the book.
+                
+            - `author`: Author of the book.
+                
+            - `genre`: Genre of the book.
+                
+            - `yearPublished`: The year the book was published.
+                
+            - `checkedOut`: Boolean indicating if the book is currently checked out.
+                
+            - `isPermanentCollection`: Boolean indicating if the book is part of the permanent collection.
+                
+            - `createdAt`: Timestamp of when the book entry was created.
+                
+
+        #### Example Response
+
+
+        ``` json
+
+        [
+          {
+            "id": "",
+            "title": "",
+            "author": "",
+            "genre": "",
+            "yearPublished": 0,
+            "checkedOut": true,
+            "isPermanentCollection": true,
+            "createdAt": ""
+          }
+        ]
+
+         ```
+
+        #### Notes
+
+
+        - Ensure that the request is made to the correct endpoint to receive the
+        desired book data.
+            
+        - The response may contain multiple book entries, and each entry will
+        have the fields specified above.
     post:
       summary: Create a new book
       parameters:
@@ -179,6 +252,13 @@ paths:
           application/json:
             schema:
               type: object
+            example: |-
+              {
+                "title": "{{tempBookTitle}}",
+               "author": ""{{$randomFirstName}}" "{{$randomLastName}}"",
+                "genre": "fiction",
+                "yearPublished": "1967"
+              }
   /books/{id}:
     get:
       summary: Verify the book exists
@@ -352,3 +432,8 @@ paths:
           application/json:
             schema:
               type: object
+              properties:
+                checkedOut:
+                  type: boolean
+            example:
+              checkedOut: true

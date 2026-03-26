@@ -9,7 +9,13 @@ headers:
     disabled: true
 body:
   type: json
-  content: ""
+  content: |-
+    {
+      "title": "{{tempBookTitle}}",
+     "author": "{{$randomFirstName}} {{$randomLastName}}",
+      "genre": "fiction",
+      "yearPublished": "1967"
+    }
 scripts:
   - type: afterResponse
     code: >-

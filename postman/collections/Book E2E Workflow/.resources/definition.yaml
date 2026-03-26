@@ -24,7 +24,7 @@ description: |-
   Name: Ronak  
   Email: [admin@admin.com](https://mailto:admin@admin.com)
 variables:
-  url: ""
+  url: https://library-api.postmanlabs.com
   bookId: ""
   bookTitle: ""
   test: ""
@@ -43,16 +43,10 @@ scripts:
 
       // }
     language: text/javascript
-  - type: http:afterResponse
-    code: |-
-      pm.test("Status code is 200", function () {
-          pm.response.to.have.status(200);
-      });
-    language: text/javascript
 auth:
-  - id: f83c8239-91bd-4b9f-bc0c-fe2f96ff44cd
+  - id: d3c10f39-abbe-4930-9604-a6b9a587ae71
     type: apikey
     name: apikey auth
     credentials:
-      value: "{{libraryApiKey}}"
       key: api-key
+      value: "{{libraryApiKey}}"
