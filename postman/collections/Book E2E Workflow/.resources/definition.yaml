@@ -44,7 +44,7 @@ scripts:
       // }
     language: text/javascript
 auth:
-  - id: c4820c66-b550-4966-a2bb-c0645bd5035e
+  - id: 3b567188-c9e6-4a31-a80e-ae42e743be48
     type: apikey
     name: apikey auth
     credentials:

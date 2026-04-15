@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/books"
+method: POST
+headers:
+  x-mock-response-code: "201"
+  x-mock-response-name: Dynamic Variables Mock Demo
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "{{tempBookTitle}}",
+     "author": ""{{$randomFirstName}}" "{{$randomLastName}}"",
+      "genre": "fiction",
+      "yearPublished": "1967"
+    }
+examples: ./.resources/Create a new book.resources/examples
+order: 3000

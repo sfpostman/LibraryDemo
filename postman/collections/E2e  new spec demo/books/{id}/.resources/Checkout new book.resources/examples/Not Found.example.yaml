@@ -1,0 +1,31 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/books/:id"
+  method: PATCH
+  headers:
+    x-mock-response-code: "200"
+    Content-Type: application/json
+    Accept: application/json
+  pathVariables:
+    id: "{{bookId}}"
+  body:
+    type: json
+    content: |-
+      {
+        "checkedOut": true
+      }
+response:
+  statusCode: 404
+  statusText: Not Found
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "error": {
+          "code": 404,
+          "message": "The book you are searching for cannot be found."
+        }
+      }
+order: 2000

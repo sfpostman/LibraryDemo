@@ -1,0 +1,27 @@
+$kind: collection
+description: |-
+  # 🤝 Authorization Flow
+
+  <img src="https://content.pstmn.io/874faa43-1838-4e73-b3e6-35e0d30911dc/MV9uaGVmWnRKdFAzX0xoTUtMdWVVek1nLmdpZg==">
+
+  # 🚀 API Flow
+
+  <img src="https://content.pstmn.io/94d8b05a-57fe-4bd7-8b5c-2a1bc787e67b/aW1hZ2UucG5n" width="1663" height="1118">
+
+  # ⚠️ Common Gotchas
+
+  - Use a valid XYZ
+      
+  - Beware of ABC
+      
+
+  # Required file:
+
+  - [CSV file](https://docs.google.com/spreadsheets/d/1JKilNNN0Ts5tWJf6ae_HKUY9x7Bwx3CiLPJ0G4C9Ik8/edit?usp=sharing)
+      
+
+  Contact Support:  
+  Name: Ronak  
+  Email: [admin@admin.com](https://mailto:admin@admin.com)
+variables:
+  baseUrl: https://library-api.postmanlabs.com

@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/books/:id"
+method: GET
+headers:
+  x-mock-response-code: "200"
+  Accept: application/json
+pathVariables:
+  id: "{{bookId}}"
+examples: ./.resources/Verify the book exists.resources/examples
+order: 1000

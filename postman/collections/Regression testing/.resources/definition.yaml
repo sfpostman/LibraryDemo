@@ -1,0 +1,37 @@
+$kind: collection
+description: |-
+  # 🧪 Get started here
+
+  This template helps ensure your API continues to work as expected after updates or changes. It contains sample requests and [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) for a series of tests that validate different aspects of an API, including:
+
+  1. **Status code verification:** We'll check if the API returns the expected status codes for various requests, ensuring reliability and proper error handling.
+      
+  2. **JSON schema verification:** We'll make sure the JSON response conforms to a specified JSON Schema, ensuring API contracts are honored.
+      
+  3. **Response time verification:** We'll verify that the API's response time is within the acceptable range, providing a smooth user experience and optimizing performance.
+      
+  4. **Response body verification:** We'll validate the structure and content of the response body for accuracy, ensuring the integrity of the data and preventing potential issues downstream.
+      
+  5. **Header verification:** We'll confirm the presence and correct values of specific headers in the response, enabling secure and well-structured communication between your app and its users.
+      
+
+  ## 🔖 **How to use this template**
+
+  **Step 1:** Send the sample requests and view the response and test results.
+
+  **Step 2:** Replace the sample request URLs with your desired API endpoints.
+
+  **Step 3:** Customize the tests in the "Scripts" tab if needed. Don't forget to save your changes.
+
+  **Step 4:** [Run the collection](https://learning.postman.com/docs/collections/running-collections/intro-to-collection-runs/) by selecting "Run".
+
+  <img src="https://content.pstmn.io/666cfa65-6e00-4308-871b-f831128bc0ac/Y29sbGVjdGlvbi1ydW5uZXItYnV0dG9uLmpwZWc=" width="246" height="102">
+
+  ## 💡Related templates
+
+  [Integration testing](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=fe506090-ca91-4340-bea9-82d2c3d2bb9a&sourceTemplateId=7ab0f80e-a964-46ee-b948-4a4e3a85809c)  
+  [Performance testing](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=3302192d-87dd-4612-b381-61894de21203&sourceTemplateId=7ab0f80e-a964-46ee-b948-4a4e3a85809c)  
+  [Mock data generation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=da8ceebc-d4da-478c-ab8a-37634faefc74&sourceTemplateId=7ab0f80e-a964-46ee-b948-4a4e3a85809c)  
+  [Common API vulnerabilities check](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e1edbae8-6429-453d-890e-00385eea1811&sourceTemplateId=7ab0f80e-a964-46ee-b948-4a4e3a85809c)
+variables:
+  baseUrl: https://postman-echo.com

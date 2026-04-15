@@ -1,5 +1,5 @@
 $kind: http-request
-url: "{{url}}/books/:id"
+url: "{{url}}:/books/:id"
 method: PATCH
 headers:
   x-mock-response-code: "200"

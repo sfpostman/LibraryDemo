@@ -1,6 +1,6 @@
 $kind: http-example
 request:
-  url: "{{url}}/books/:id"
+  url: "{{url}}:/books/:id"
   method: GET
   pathVariables:
     id: "{{bookId}}"

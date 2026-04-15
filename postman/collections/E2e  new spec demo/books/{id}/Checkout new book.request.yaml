@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/books/:id"
+method: PATCH
+headers:
+  x-mock-response-code: "200"
+  Content-Type: application/json
+  Accept: application/json
+pathVariables:
+  id: "{{bookId}}"
+body:
+  type: json
+  content: |-
+    {
+      "checkedOut": true
+    }
+examples: ./.resources/Checkout new book.resources/examples
+order: 2000

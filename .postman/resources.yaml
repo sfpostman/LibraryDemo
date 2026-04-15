@@ -13,6 +13,8 @@ cloudResources:
     ../docsspec.yaml: 9fb04b27-243c-48c2-afc5-fef7a776a259
     ../index.yaml: d66aafa6-7e5f-41bc-9fa6-642efd48feb2
   collections:
+    ../postman/collections/Regression testing: 51415495-184c5e0c-103c-4fb3-aec6-00feb53d5a20
+    ../postman/collections/E2e  new spec demo: 51415495-2dc37507-c71f-4dd1-a967-50de0a13b96e
     ../postman/collections/Book E2E Workflow: 51415495-43d16a78-985d-42fc-94d6-8a80b5232f01
     ../postman/collections/LibraryAPI: 51415495-82ea0c7c-03ea-4bc5-9699-1d160d4486bb
   environments:
