@@ -1,0 +1,41 @@
+- name: Set up Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: '20'
+
+  - name: Install Spectral
+    run: npm install -g @stoplight/spectral-cli
+
+  # Optional: Use a custom Spectral ruleset if present
+  - name: Detect custom Spectral ruleset
+    id: ruleset
+    run: |
+      if [ -f ".spectral.yaml" ] || [ -f ".spectral.yml" ]; then
+        echo "has_ruleset=true" >> $GITHUB_OUTPUT
+      else
+        echo "has_ruleset=false" >> $GITHUB_OUTPUT
+      fi
+
+  - name: Lint: Book E2E Workflow.yaml
+    run: |
+      if [ "${{ steps.ruleset.outputs.has_ruleset }}" = "true" ]; then
+        spectral lint 'Book E2E Workflow.yaml'
+      else
+        spectral lint 'Book E2E Workflow.yaml' --ruleset="https://unpkg.com/@stoplight/spectral@latest/rulesets/oas/index.json"
+      fi
+
+  - name: Lint: docsspec.yaml
+    run: |
+      if [ "${{ steps.ruleset.outputs.has_ruleset }}" = "true" ]; then
+        spectral lint 'docsspec.yaml'
+      else
+        spectral lint 'docsspec.yaml' --ruleset="https://unpkg.com/@stoplight/spectral@latest/rulesets/oas/index.json"
+      fi
+
+  - name: Lint: index.yaml
+    run: |
+      if [ "${{ steps.ruleset.outputs.has_ruleset }}" = "true" ]; then
+        spectral lint 'index.yaml'
+      else
+        spectral lint 'index.yaml' --ruleset="https://unpkg.com/@stoplight/spectral@latest/rulesets/oas/index.json"
+      fi
