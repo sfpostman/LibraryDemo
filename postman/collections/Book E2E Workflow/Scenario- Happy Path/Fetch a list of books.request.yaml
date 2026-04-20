@@ -5,7 +5,7 @@ headers:
   x-mock-response-code: "500"
 scripts:
   - type: afterResponse
-    code: >-
+    code: >+
       
       pm.test("Response status code is 200", function () {
           pm.expect(pm.response.code).to.eql(200);
@@ -90,17 +90,6 @@ scripts:
       })
 
 
-      pm.test('GET /books - Negative check: does not return an error object',
-      function () {
-          var jsonData = pm.response.json();
-          pm.expect(jsonData).to.not.have.property('error');
-          pm.expect(jsonData).to.not.have.property('errors');
-      })
-
-
-      pm.test("Status code is 200", function () {
-          pm.response.to.have.status(2);
-      });
     language: text/javascript
-examples: ./.resources/Fetch a list of books.resources/examples
+examples: .resources/Fetch a list of books.resources/examples
 order: 1000

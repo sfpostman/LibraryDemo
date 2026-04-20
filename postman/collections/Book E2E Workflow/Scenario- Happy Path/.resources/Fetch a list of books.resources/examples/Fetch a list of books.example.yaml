@@ -1,0 +1,31 @@
+$kind: http-example
+request:
+  url: "{{url}}/books"
+  method: GET
+  headers:
+    x-mock-response-code: "500"
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    content-type: application/json
+    content-length: "1380"
+    date: Thu, 16 Apr 2026 14:05:18 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: '[{"id":"29f47d22-1062-479d-be58-2d8db3ecb8be","title":"Ficciones","author":"Jorge
+      Luis
+      Borges","genre":"fiction","yearPublished":1944,"checkedOut":false,"isPermanentCollection":true,"createdAt":"2024-01-01T00:00:00.000Z"},{"id":"7f04875b-9201-4c8f-b381-18370f9b2dfb","title":"One
+      Hundred Years of Solitude","author":"Gabriel García
+      Márquez","genre":"fiction","yearPublished":1967,"checkedOut":false,"isPermanentCollection":true,"createdAt":"2024-01-02T00:00:00.000Z"},{"id":"a1b2c3d4-e5f6-7890-abcd-ef1234567890","title":"The
+      Four Agreements","author":"don Miguel
+      Ruiz","genre":"self-help","yearPublished":1997,"checkedOut":true,"isPermanentCollection":false,"createdAt":"2024-06-15T10:30:00.000Z"},{"id":"b2f8e3c1-fdea-4aea-82e2-681de170a552","title":"enable
+      HDD Maine","author":"Daphne
+      Pagac","genre":"fiction","yearPublished":"1967","checkedOut":false,"isPermanentCollection":false,"createdAt":"2026-04-16T14:02:35.155Z"},{"id":"9e5692cc-110b-4524-a130-1752a624469a","title":"primary
+      Nevada","author":"Jairo
+      Wuckert","genre":"fiction","yearPublished":"1967","checkedOut":true,"isPermanentCollection":false,"createdAt":"2026-04-16T14:03:10.469Z"},{"id":"109ca570-cf35-4746-9f13-05d17c7d4bde","title":"Lodge
+      green Generic","author":"Alexys
+      Spinka","genre":"fiction","yearPublished":"1967","checkedOut":true,"isPermanentCollection":false,"createdAt":"2026-04-16T14:04:14.240Z"}]'
+order: 2674336491111212

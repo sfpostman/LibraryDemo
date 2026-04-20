@@ -1,0 +1,8 @@
+name: Local
+values:
+  - key: url
+    value: ''
+    enabled: true
+  - key: libraryApiKey
+    value: ''
+    enabled: true

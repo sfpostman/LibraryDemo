@@ -1,4 +1,5 @@
 $kind: collection
+name: Book E2E Workflow
 description: |-
   # 🤝 Authorization Flow
 
@@ -44,9 +45,4 @@ scripts:
       // }
     language: text/javascript
 auth:
-  - id: 3b567188-c9e6-4a31-a80e-ae42e743be48
-    type: apikey
-    name: apikey auth
-    credentials:
-      key: api-key
-      value: "{{libraryApiKey}}"
+  type: apikey
